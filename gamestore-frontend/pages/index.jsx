@@ -1,26 +1,44 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import { useState } from 'react'
-import { BsFillMoonStarsFill, BsDatabaseFillAdd ,BsDatabaseFillDash, BsDatabaseFillUp} from "react-icons/bs";
-import Consoles from '../components/Consoles'
-import Games from '../components/Games'
-import Shirts from '../components/Shirts'
-import SearchBy from '../components/GameSearchBy'
-// compile these into a single import 
-import ConsoleSearchBy from '@/components/ConsoleSearchBy';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { BsSearch, BsDatabaseFillAdd, BsDatabaseFillDash } from 'react-icons/bs';
+import { FiPlus } from 'react-icons/fi';
+import { MdDelete } from 'react-icons/md';
+import PurchaseForm from '@/components/PurchaseForm';
+import Games from '../components/Games';
+import Consoles from '../components/Consoles';
+import Shirts from '../components/Shirts';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 
-// import DatabaseForm from '@/components/DatabaseForm'; 
-import GameSearchBy from '../components/GameSearchBy';
+// total
+// name
+// invoice_id
+// street
+// city
+// state
+// zipcode
+// item_type
+// item_id
+// unit_price
+// quantity
+// subtotal
+// tax
+// processing_fee
 
-const inter = Inter({ subsets: ['latin'] });
+
 
 export default function Home() {
   const [showEditConsole, setShowEditConsole] = useState(false);
+  const[invoiceTable, setInvoiceTable] = useState('');
+  const [state, setState] = useState(''); // State for the search query
+  const [customerName, setCustomerName] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [purchaseQuantity, setPurchaseQuantity] = useState(0);
   const [showEditGame, setShowEditGame] = useState(false);
   const [showEditShirt, setShowEditShirt] = useState(false);
   const [showDatabaseWindow, setShowDatabaseWindow] = useState(false);
-
-
+  const [showPurchaseForm, setShowPurchaseForm] = useState(false);
+ 
   // Function to toggle the editConsole state
   function editConsole() {
     setShowEditConsole(!showEditConsole);
@@ -36,59 +54,51 @@ export default function Home() {
     setShowEditShirt(!showEditShirt);
   }
 
+  const handleGamePurchase = (gameId, title, price, quantity ) => {
+    // Here, you can access the game ID and perform actions, e.g., add to a shopping cart
+    console.log(`Purchased game with ID: ${gameId} and title: ${title} for $${price} with quantity: ${quantity}`);
+    // You can perform further actions here, such as updating a shopping cart state
+  };
+
   return (
     <main className={`min-h-screen  bg-gradient-radial from-blue-950 to-black bg-opacity-20 `}>
       <section className={`min-h-screen px-14 py-10 font-mulish  `}>
-      <nav className={`flex justify-between`}>
+        <nav className={`flex justify-between`}>
           <h1 className='text-5xl font-bold  text-white drop-shadow-md'>Game Store</h1>
           <ul className={` flex `}>
-            <span className="hover:translate-x-1 duration-100">
-              <li className="rounded-se-xl bg-gradient-to-br from-slate-800 to-slate-200-100 text-slate-200  cursor-pointer p-2 lg:text-xl font-mulish">
-                <a href="/">Code</a>
-              </li>
-            </span>
-            <span className="hover:translate-x-1 duration-100">
-              <li className="rounded-se-xl bg-gradient-to-br from-slate-800 to-slate-200-100 text-slate-200  cursor-pointer p-2 lg:text-xl font-mulish">
-                <a href="/">About</a>
+            <span className="hover:translate-x-1 duration-100 ">
+              <li className="rounded-se-xl flex bg-gradient-to-br from-slate-800 to-slate-200-100 text-slate-200  cursor-pointer p-2 lg:text-xl font-mulish">
+                {/* q:toggle purchase form */}
+                <AiOutlineShoppingCart onClick={() => setShowPurchaseForm(!showPurchaseForm)} className="text-3xl m-[.35rem]" />
               </li>
             </span>
           </ul>
         </nav>
+        {showPurchaseForm && <PurchaseForm />}
         <p className='max-w-4xl pt-3'>
-          This is a full-stack web application that allows users to browse, edit and purchase games, consoles and shirts. The frontend is built with Next.js and Tailwind CSS. The backend is built with Java Spring Boot and MySQL.
+          This is a full-stack web application that allows users to browse, edit and purchase games, consoles, and shirts. The frontend is built with Next.js and Tailwind CSS. The backend is built with Java Spring Boot and MySQL.
         </p>
-
         <div className='px-10 pt-10'>
           <h2 className='text-4xl font-bold text-white drop-shadow-md'> Inventory </h2>
           <div className=''>
           </div>
-          <div className= {` gap-4 flex ${showDatabaseWindow ? 'justify-start': 'justify-start'}`}>
-
-            <span className={`duration-300 hover:translate-x-1 flex-1 ${showDatabaseWindow ? 'basis-1/5': 'flex-1'}`}>
-              {/* <h2 className='inline flex-nowrap text-lg xl:text-2xl font-bold text-white drop-shadow-md duration-100'> Games </h2> */}
-              {/* <BsDatabaseFillAdd className={`text-lg mx-2 inline relative hover:translate-x-[.1rem] hover:cursor-pointer duration-200`} onClick={() => setShowDatabaseWindow(!showDatabaseWindow)}/> */}
-              {/* <BsDatabaseFillDash className={`text-lg mx-2 inline relative hover:translate-x-[.1rem] hover:cursor-pointer duration-200`} onClick={() => setShowDatabaseWindow(!showDatabaseWindow)}/> */}
-              {/* <GameSearchBy /> */}
-              <Games />
+          <div className={` gap-4 flex `}>
+            <span className={`duration-300 hover:translate-x-1 flex-1 `}>
+            <Games
+              showPurchaseForm={showPurchaseForm}
+              setShowPurchaseForm={setShowPurchaseForm}
+              onPurchase={handleGamePurchase} // Pass the onPurchase function as a prop
+            />
             </span>
-            <span className={`duration-300 hover:translate-x-1 ${showDatabaseWindow ? 'display: none': 'flex-1'}`}>
-              {/* <h2 className='inline flex-nowrap text-lg xl:text-2xl font-bold text-white drop-shadow-md duration-100'> Consoles </h2>
-              <BsDatabaseFillAdd className={`text-lg  mx-2 inline relative hover:translate-x-[.1rem] hover:cursor-pointer duration-200`} onClick={() => setShowDatabaseWindow(!showDatabaseWindow)}/>
-              <BsDatabaseFillDash className={`text-lg mx-2 inline relative hover:translate-x-[.1rem] hover:cursor-pointer duration-200`} onClick={() => setShowDatabaseWindow(!showDatabaseWindow)}/>
-              <ConsoleSearchBy /> */}
+            <span className={`duration-300 hover:translate-x-1 `}>
               <Consoles />
             </span>
 
-            <span className={`duration-300 hover:translate-x-1 ${showDatabaseWindow ? 'basis-1/5 ': 'flex-1'}`}>
-              <h2 className='inline text-lg xl:text-2xl font-bold text-white drop-shadow-md pt-10 duration-100'> Shirts </h2>
-              <BsDatabaseFillAdd className={`text-lg mx-2 inline relative hover:translate-x-[.1rem] hover:cursor-pointer duration-200`} onClick={() => setShowDatabaseWindow(!showDatabaseWindow)}/>
-              <BsDatabaseFillDash className={`text-lg mx-2 inline relative hover:translate-x-[.1rem] hover:cursor-pointer duration-200`} onClick={() => setShowDatabaseWindow(!showDatabaseWindow)}/>
-              <GameSearchBy />
+            <span className={`duration-300 hover:translate-x-1 `}>
 
               <Shirts />
             </span>
 
-            
           </div>
         </div>
       </section>

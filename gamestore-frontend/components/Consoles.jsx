@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BsSearch, BsDatabaseFillAdd, BsDatabaseFillDash } from 'react-icons/bs';
 import { MdDelete } from 'react-icons/md';
-import DatabaseForm from './DatabaseForm';
+import DatabaseForm from './PurchaseForm';
 
 // fetches all consoles from database
 
