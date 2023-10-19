@@ -1,0 +1,29 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: game_store
+    ports:
+      - "3306:3306"
+  
+  backend:
+    build:
+      context: ./gamestore-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+  
+  frontend:
+    build:
+      context: ./gamestore-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: 
+      # whats the abovel line doing?
+      # it is setting the environment variable REACT_APP_API_URL to http://backend:8080
+      # this is the url that the frontend will use to make requests to the backend
+      # the backend is called backend because that is the name of the service in the docker-compose.yml file

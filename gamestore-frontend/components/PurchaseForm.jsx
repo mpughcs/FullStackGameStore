@@ -66,7 +66,7 @@ function handleSubmit(event) {
         return (            
             <div className='my-4 hover:cursor-pointer hover:translate-x-[.1rem] duration-150 bg-slate-50 text-gray-600 p-2 rounded-lg max-w-md '>
             <form className='flex flex-col gap-2 text-black' onSubmit={handleSubmit}>
-              <h1 className='text-2xl font-bold text-black'>Add Game</h1>
+              <h1 className='text-2xl font-bold text-black'>Check out</h1>
               <label className='text-black inline'>Your Name:
               <input required className='px-1 text-black bg-transparent border-b border-black inline' type="text" name="customerName" onChange={(e)=>setCustomerName(e.target.value)}/>
               </label>

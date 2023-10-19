@@ -71,7 +71,7 @@ function postShirt(event) {
         console.error('Network error:', error);
       });
       // reloads after posting
-      // window.location.reload();
+      window.location.reload();
      
   }
 
@@ -224,7 +224,7 @@ function shirts() {
             <div>
               <ul className='flex'>
               <li className='relative top-[.5rem] '><span className='text-green-500 text-lg '>Price:</span> {Shirt.price}</li>
-              <li className={`relative ml-auto left-2 top-[.5rem] w-min text-right rounded-s-lg p-1 ${changeColor(Shirt.quantity)}`}>{Shirt.quantity}</li>
+              <li className={`relative ml-auto left-2 top-[.5rem] w-min text-right rounded-s-lg p-1 ${changeColor(Shirt.quantity)}`}>QT:{Shirt.quantity}</li>
               </ul>
             </div>
 

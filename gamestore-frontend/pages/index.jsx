@@ -9,20 +9,7 @@ import Consoles from '../components/Consoles';
 import Shirts from '../components/Shirts';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
-// total
-// name
-// invoice_id
-// street
-// city
-// state
-// zipcode
-// item_type
-// item_id
-// unit_price
-// quantity
-// subtotal
-// tax
-// processing_fee
+
 
 
 
@@ -78,12 +65,12 @@ export default function Home() {
         <p className='max-w-4xl pt-3'>
           This is a full-stack web application that allows users to browse, edit and purchase games, consoles, and shirts. The frontend is built with Next.js and Tailwind CSS. The backend is built with Java Spring Boot and MySQL.
         </p>
-        <div className='px-10 pt-10'>
+        <div className='sm:px-10 pt-10'>
           <h2 className='text-4xl font-bold text-white drop-shadow-md'> Inventory </h2>
           <div className=''>
           </div>
-          <div className={` gap-4 flex `}>
-            <span className={`duration-300 hover:translate-x-1 flex-1 `}>
+          <div className={` gap-4 flex flex-col xl:flex-row`}>
+            <span className={`duration-300 hover:translate-x-1  `}>
             <Games
               showPurchaseForm={showPurchaseForm}
               setShowPurchaseForm={setShowPurchaseForm}
@@ -98,7 +85,6 @@ export default function Home() {
 
               <Shirts />
             </span>
-
           </div>
         </div>
       </section>

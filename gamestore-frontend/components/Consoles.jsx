@@ -233,7 +233,7 @@ function Consoles() {
                     <div >
                       <ul className='flex '>
                         <li className='relative top-[.5rem] '><span className='text-green-500 text-lg '>Price:</span> {console.price}</li>
-                        <li className={`relative ml-auto left-2 top-[.5rem] w-min text-right rounded-s-lg p-1 ${changeColor(console.quantity)}`}>{console.quantity}</li>
+                        <li className={`relative ml-auto left-2 top-[.5rem] w-min text-right rounded-s-lg p-1 ${changeColor(console.quantity)}`}>QT:{console.quantity}</li>
                       </ul>
                     </div>
 
